@@ -149,10 +149,20 @@ default_queue = <%= @default_queue %>
 # listen (in seconds).
 job_heartbeat_sec = <%= @job_heartbeat_sec %>
 
+
+
 # The scheduler constantly tries to trigger new tasks (look at the
 # scheduler section in the docs for more information). This defines
 # how often the scheduler should run (in seconds).
 scheduler_heartbeat_sec = <%= @scheduler_heartbeat_sec %>
+
+# Turn off scheduler catchup by setting this to False.
+# Default behavior is unchanged and
+# Command Line Backfills still work, but the scheduler
+# will not do scheduler catchup if this is False,
+# however it can be set on a per DAG basis in the
+# DAG definition (catchup)
+catchup_by_default = <%= @catchup %>
 
 
 <% if @statsd_settings['statsd_on'] -%>
@@ -199,7 +209,7 @@ authenticate = <%= @mesos_settings['authenticate'] %>
 
 <% if @mesos_settings['authenticate'] -%>
 # Mesos credentials, if authentication is enabled
- default_principal = <%= @mesos_settings['default_principal'] %> 
+ default_principal = <%= @mesos_settings['default_principal'] %>
  default_secret =  <%= @mesos_settings['default_secret'] %>
 <% end %>
 <% end %>
