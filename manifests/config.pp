@@ -1,6 +1,6 @@
 #== Class: airflow::config
 # == Description: Manages the following resources:user,group,directories tree,
-# AIRFLOW_HOME environment variable and airflow.cfg file. 
+# AIRFLOW_HOME environment variable and airflow.cfg file.
 #
 class airflow::config inherits airflow {
   # Create user and group
