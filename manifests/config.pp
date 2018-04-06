@@ -1,6 +1,6 @@
 #== Class: airflow::config
 # == Description: Manages the following resources:user,group,directories tree,
-# AIRFLOW_HOME environment variable and airflow.cfg file. 
+# AIRFLOW_HOME environment variable and airflow.cfg file.
 #
 class airflow::config inherits airflow {
   # Create user and group
@@ -8,8 +8,8 @@ class airflow::config inherits airflow {
     ensure => 'present',
     name   => $airflow::group,
     gid    => $airflow::gid,
-  } ->
-  user { $airflow::user:
+  }
+  -> user { $airflow::user:
     ensure     => 'present',
     shell      => $airflow::shell,
     managehome => true,
@@ -46,6 +46,13 @@ class airflow::config inherits airflow {
   file { "${airflow::home_folder}/airflow.cfg":
     ensure  => 'file',
     content => template("${module_name}/airflow.cfg.erb"),
+    mode    => '0755',
+    require =>  Python::Pip[$airflow::package_name]
+  }
+  # Setup airflow.conf configuration file
+  file { '/etc/tmpfiles.d/airflow.conf':
+    ensure  => 'file',
+    content => template("${module_name}/airflow.conf.erb"),
     mode    => '0755',
     require =>  Python::Pip[$airflow::package_name]
   }

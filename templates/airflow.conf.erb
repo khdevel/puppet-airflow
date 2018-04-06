@@ -1,0 +1,3 @@
+# Allow user airflow to create subdir in /var/run
+
+D <%= scope['airflow::run_folder'] %> 0755 <%= scope['airflow::user'] %> <%= scope['airflow::group'] %>
